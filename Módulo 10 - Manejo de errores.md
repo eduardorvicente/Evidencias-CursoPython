@@ -61,6 +61,9 @@ Traceback (most recent call last):
     open("/path/to/mars.jpg")
 FileNotFoundError: [Errno 2] No such file or directory: '/path/to/mars.jpg'
 ```
+![imagen](https://user-images.githubusercontent.com/83978334/153897724-4ad29d59-7ed9-47bc-ba01-24c21493cdd0.png)
+
+
 La salida de error tiene más sentido ahora. Las rutas de acceso apuntan a un único archivo denominado *open.py*. La salida menciona que el error se inicia en la línea 5, que incluye la llamada a `main()`. A continuación, la salida sigue el error a la línea 2 en la llamada de función `open()`. Y, por último, `FileNotFoundError` notifica de nuevo que el archivo o el directorio no existen.
 
 Los tracebacks casi siempre incluyen la información siguiente:
@@ -115,6 +118,8 @@ Traceback (most recent call last):
     configuration = open('config.txt')
 IsADirectoryError: [Errno 21] Is a directory: 'config.txt'
 ```
+![imagen](https://user-images.githubusercontent.com/83978334/153898074-83b0bf2c-a999-4772-bcd1-9d693f5d351b.png)
+
 Una manera poco útil de controlar este error sería detectar todas las excepciones posibles para evitar un traceback. Para comprender por qué detectar todas las excepciones es problemático, probaremos actualizando la función `main()`:
 ```
 def main():
@@ -146,6 +151,7 @@ def main():
     except IsADirectoryError:
         print("Found config.txt but it is a directory, couldn't read it")
 ```
+ ![imagen](https://user-images.githubusercontent.com/83978334/153898207-4e09aa99-2eb7-4515-a05d-8dad6ead9125.png)
 
 Ahora volvemos a ejecutarlo, en el mismo lugar donde *config.txt* está con el problema de permisos:
 
@@ -153,6 +159,8 @@ Ahora volvemos a ejecutarlo, en el mismo lugar donde *config.txt* está con el p
 $ python config.py
 Found config.txt but couldn't read it
 ```
+![imagen](https://user-images.githubusercontent.com/83978334/153898485-328535eb-5c34-47c6-8b07-ef7e42ce48e3.png)
+
 Eliminamos el archivo config.txt para asegurarnos de que se alcanza el primer bloque `except` en su lugar:
 ```
 $ rm -f config.txt
@@ -224,12 +232,15 @@ PruProbemos con cinco astronautas, 100 litros de agua sobrante y dos días:
 >>> water_left(5, 100, 2)
 'Total water left after 2 days is: -10 liters'
 ```
+
+![imagen](https://user-images.githubusercontent.com/83978334/153899838-1d17668d-d090-4581-aae0-753ac3ee0abf.png)
+
 Esto no es muy útil, ya que una carencia en los litros sería un error. Después, el sistema de navegación podría alertar a los astronautas que no habrá suficiente agua para todos en dos días. Si eres un ingeniero(a) que programa el sistema de navegación, podrías generar una excepción en la función water_left() para alertar de la condición de error:
 
 ```
 def water_left(astronauts, water_left, days_left):
     daily_usage = astronauts * 11
-    total_usage = daily_usage * days_left
+      total_usage = daily_usage * days_left
     total_water_left = water_left - total_usage
     if total_water_left < 0:
         raise RuntimeError(f"There is not enough water for {astronauts} astronauts after {days_left} days!")
@@ -243,6 +254,9 @@ Traceback (most recent call last):
   File "<stdin>", line 6, in water_left
 RuntimeError: There is not enough water for 5 astronauts after 2 days!
 ```
+
+![imagen](https://user-images.githubusercontent.com/83978334/153900439-09e31613-f998-4027-b645-91da4a83445a.png)
+
 En el sistema de navegación, el código para señalar la alerta ahora puede usar `RuntimeError` para generar la alerta:
 
 ```
@@ -292,31 +306,5 @@ Traceback (most recent call last):
   File "<stdin>", line 9, in water_left
 TypeError: All arguments must be of type int, but received: '3'
 ```
+![imagen](https://user-images.githubusercontent.com/83978334/153901105-58c9e2ce-dc51-426a-8369-9f8c2d28cd5a.png)
 
-## Resumen
-Para ser un desarrollador eficaz, debes saber cómo funcionan las excepciones y cómo controlarlas. En este módulo, has descubierto cómo usar la salida de excepción para la depuración, cómo detectar y generar excepciones y, por último, cómo afecta a la lógica de un programa cuando se producen excepciones.
-
-Con los conocimientos del uso y el control de excepciones, puedes evitar problemas comunes, como detectarlos todos para evitar tracebacks.
-
-En este módulo, has obtenido información sobre estas aptitudes:
-
-* Leer y usar la salida de error de las excepciones
-* Controlar correctamente las excepciones
-* Generar excepciones con mensajes de error útiles
-* Usar excepciones para controlar el flujo de un programa
-
-
-## Kata del módulo 10
-
-Intenta realizar los ejercicios descritos en este documento.
-
----
-
-Curso Propedútico de Python para Launch X - Innovacción Virtual.
-
-Material desarrollado con base en los contenidos de MSLearn y la metáfora de LaunchX, traducción e implementación por: Fernanda Ochoa - Learning Producer de LaunchX.
-
-Redes:
-* GitHub: [FernandaOchoa](https://github.com/FernandaOchoa)
-* Twitter: [@imonsh](https://twitter.com/imonsh)
-* Instagram: [fherz8a](https://www.instagram.com/fherz8a/)
